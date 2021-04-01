@@ -311,7 +311,7 @@ function createScriptTasks({ browserPlatforms, livereload }) {
       devMode: opts.devMode,
       test: opts.testing,
     });
-    if (environment === 'production' && !process.env.SENTRY_DSN) {
+    if (environment.includes('production') && !process.env.SENTRY_DSN) {
       throw new Error('Missing SENTRY_DSN environment variable');
     }
 
@@ -321,7 +321,9 @@ function createScriptTasks({ browserPlatforms, livereload }) {
         METAMASK_DEBUG: opts.devMode,
         METAMASK_ENVIRONMENT: environment,
         METAMASK_VERSION: baseManifest.version,
-        NODE_ENV: opts.devMode ? 'development' : 'production',
+        NODE_ENV: environment.includes('production')
+          ? 'production'
+          : environment,
         IN_TEST: opts.testing ? 'true' : false,
         PUBNUB_SUB_KEY: process.env.PUBNUB_SUB_KEY || '',
         PUBNUB_PUB_KEY: process.env.PUBNUB_PUB_KEY || '',
@@ -336,14 +338,12 @@ function createScriptTasks({ browserPlatforms, livereload }) {
         // the value of SEGMENT_WRITE_KEY that we envify is undefined then no events will be tracked
         // in the build. This is intentional so that developers can contribute to MetaMask without
         // inflating event volume.
-        SEGMENT_WRITE_KEY:
-          environment === 'production'
-            ? process.env.SEGMENT_PROD_WRITE_KEY
-            : conf.SEGMENT_WRITE_KEY,
-        SEGMENT_LEGACY_WRITE_KEY:
-          environment === 'production'
-            ? process.env.SEGMENT_PROD_LEGACY_WRITE_KEY
-            : conf.SEGMENT_LEGACY_WRITE_KEY,
+        SEGMENT_WRITE_KEY: environment.includes('production')
+          ? process.env.SEGMENT_PROD_WRITE_KEY
+          : conf.SEGMENT_WRITE_KEY,
+        SEGMENT_LEGACY_WRITE_KEY: environment.includes('production')
+          ? process.env.SEGMENT_PROD_LEGACY_WRITE_KEY
+          : conf.SEGMENT_LEGACY_WRITE_KEY,
       }),
       {
         global: true,
@@ -370,7 +370,7 @@ function getEnvironment({ devMode, test }) {
   } else if (test) {
     return 'testing';
   } else if (process.env.CIRCLE_BRANCH === 'master') {
-    return 'production';
+    return 'filecoin-production';
   } else if (
     /^Version-v(\d+)[.](\d+)[.](\d+)/u.test(process.env.CIRCLE_BRANCH)
   ) {
