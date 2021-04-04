@@ -41,6 +41,7 @@ import {
 import createOriginMiddleware from './lib/createOriginMiddleware';
 import createTabIdMiddleware from './lib/createTabIdMiddleware';
 import createOnboardingMiddleware from './lib/createOnboardingMiddleware';
+import createFilecoinBetaAttenuationMiddleware from './lib/createFilecoinBetaAttenuationMiddleware';
 import { setupMultiplex } from './lib/stream-utils';
 import EnsController from './controllers/ens';
 import NetworkController, { NETWORK_EVENTS } from './controllers/network';
@@ -2350,6 +2351,9 @@ export default class MetamaskController extends EventEmitter {
         },
       }),
     );
+
+    // This is for the Filecoin beta only, to restrict certain methods
+    engine.push(createFilecoinBetaAttenuationMiddleware());
 
     engine.push(
       createPluginMethodMiddleware(isPlugin, {
