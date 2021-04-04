@@ -311,7 +311,7 @@ export class PermissionsController {
     this.validatePermittedAccounts([account]);
 
     const oldPermittedAccounts = this._getPermittedAccounts(origin);
-    if (!oldPermittedAccounts) {
+    if (oldPermittedAccounts.length === 0) {
       throw new Error(`Origin does not have 'eth_accounts' permission`);
     } else if (oldPermittedAccounts.includes(account)) {
       throw new Error('Account is already permitted for origin');
@@ -349,7 +349,7 @@ export class PermissionsController {
     this.validatePermittedAccounts([account]);
 
     const oldPermittedAccounts = this._getPermittedAccounts(origin);
-    if (!oldPermittedAccounts) {
+    if (oldPermittedAccounts.length === 0) {
       throw new Error(`Origin does not have 'eth_accounts' permission`);
     } else if (!oldPermittedAccounts.includes(account)) {
       throw new Error('Account is not permitted for origin');
@@ -639,7 +639,7 @@ export class PermissionsController {
    * Get current set of permitted accounts for the given origin
    *
    * @param {string} origin - The origin to obtain permitted accounts for
-   * @returns {Array<string>|null} The list of permitted accounts
+   * @returns {Array<string>} The list of permitted accounts
    */
   _getPermittedAccounts(origin) {
     const permittedAccounts = this.permissions
@@ -647,7 +647,7 @@ export class PermissionsController {
       ?.caveats?.find((caveat) => caveat.name === CAVEAT_NAMES.exposedAccounts)
       ?.value;
 
-    return permittedAccounts || null;
+    return permittedAccounts || [];
   }
 
   /**
