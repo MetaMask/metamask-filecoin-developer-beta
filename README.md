@@ -5,20 +5,18 @@
 Welcome to the MetaMask Filecoin Developer Preview.
 This is a special distribution of the MetaMask extension intended for developers only.
 It uses a prototype of the [MetaMask Snaps plugin system](https://medium.com/metamask/introducing-the-next-evolution-of-the-web3-wallet-4abdf801a4ee) to include a preinstalled version of a Filecoin plugin, called a _snap_.
+
+## Installation
+
 For the latest version, please see [Releases](https://github.com/MetaMask/metamask-extension/releases).
+Builds can be installed using [these instructions](./docs/add-to-chrome.md).
+We recommend creating a new browser profile where you install the Filecoin developer preview.
+This distribution of the MetaMask extension may not receive all features and bug fixes added to the official, browser store distribution.
+
+## Usage
 
 The Filecoin Developer Preview only supports the preinstalled Filecoin snap, and can only be used on Chromium browsers.
 You can try it out with [this dapp](https://metamask.github.io/filsnap).
-Builds can be installed using [these instructions](./docs/add-to-chrome.md).
-
-For related repositories and documentation, please see:
-
-- [The Filecoin snap](https://github.com/MetaMask/filsnap/tree/master/packages/snap)
-- [The prototype Snaps system](https://github.com/MetaMask/snaps-skunkworks)
-
-> Kudos to our friends at [NodeFactory](https://github.com/NodeFactoryIo) for the original implementation of the Filecoin snap and dapp.
-
-## How Does This Work?
 
 The Filecoin snap (a.k.a. `filsnap`) runs within a [Secure EcmaScript](https://github.com/endojs/endo/tree/master/packages/ses) Compartment inside a [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API).
 The snap can be toggled on and off and reinstalled via the Filecoin dropdown in the main MetaMask menu bar.
@@ -69,6 +67,13 @@ await window.ethereum.request({
   }]
 });
 ```
+
+For related repositories and documentation, please see:
+
+- [The Filecoin snap](https://github.com/MetaMask/filsnap/tree/master/packages/snap)
+- [The prototype Snaps system](https://github.com/MetaMask/snaps-skunkworks)
+
+> Kudos to our friends at [NodeFactory](https://github.com/NodeFactoryIo) for the original implementation of the Filecoin snap and dapp.
 
 ## About MetaMask
 
