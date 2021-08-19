@@ -5,6 +5,7 @@ import resolveEnsToIpfsContentId from './resolver';
 const fetchWithTimeout = getFetchWithTimeout(30000);
 
 const supportedTopLevelDomains = ['eth'];
+const supportedProtocols = ['ipfs:', 'ipns:']
 
 export default function setupEnsIpfsResolver({
   provider,
@@ -12,7 +13,12 @@ export default function setupEnsIpfsResolver({
   getIpfsGateway,
 }) {
   // install listener
-  const urlPatterns = supportedTopLevelDomains.map((tld) => `*://*.${tld}/*`);
+  const urlPatterns = supportedTopLevelDomains.map(
+    (tld) => `*://*.${tld}/*`
+  ).concat(supportedProtocols.map(
+    (p) => `${p}//*`)
+  );
+
   extension.webRequest.onErrorOccurred.addListener(webRequestDidFail, {
     urls: urlPatterns,
     types: ['main_frame'],
@@ -34,15 +40,25 @@ export default function setupEnsIpfsResolver({
       return;
     }
     // parse ens name
-    const { hostname: name, pathname, search, hash: fragment } = new URL(url);
+    const { hostname: name, pathname, search, hash: fragment, protocol } = new URL(url);
     const domainParts = name.split('.');
     const topLevelDomain = domainParts[domainParts.length - 1];
-    // if unsupported TLD, abort
-    if (!supportedTopLevelDomains.includes(topLevelDomain)) {
+
+    if(supportedProtocols.includes(protocol)) {
+      console.warn(`Resolving ${protocol} not yet supported`);
+    } else if(supportedTopLevelDomains.includes(topLevelDomain)) {
+      attemptResolve({ tabId, name, pathname, search, fragment });
+    } else {
       return;
     }
-    // otherwise attempt resolve
-    attemptResolve({ tabId, name, pathname, search, fragment });
+
+    // // if unsupported TLD, abort
+    // if (!supportedTopLevelDomains.includes(topLevelDomain)) {
+    //   return;
+    // }
+
+    // // otherwise attempt resolve
+    // attemptResolve({ tabId, name, pathname, search, fragment });
   }
 
   async function attemptResolve({ tabId, name, pathname, search, fragment }) {
