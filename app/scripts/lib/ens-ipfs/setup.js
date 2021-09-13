@@ -5,7 +5,7 @@ import resolveEnsToIpfsContentId from './resolver';
 const fetchWithTimeout = getFetchWithTimeout(30000);
 
 const supportedTopLevelDomains = ['eth'];
-const supportedProtocols = ['ipfs', 'ipns']
+const supportedProtocols = ['ipfs', 'ipns'];
 
 export default function setupEnsIpfsResolver({
   provider,
@@ -13,9 +13,7 @@ export default function setupEnsIpfsResolver({
   getIpfsGateway,
   // install listener
 }) {
-  const urlPatterns = supportedTopLevelDomains.map(
-    (tld) => `*://*.${tld}/*`
-  );
+  const urlPatterns = supportedTopLevelDomains.map((tld) => `*://*.${tld}/*`);
 
   extension.webRequest.onErrorOccurred.addListener(webRequestDidFail, {
     types: ['main_frame'],
@@ -24,8 +22,8 @@ export default function setupEnsIpfsResolver({
 
   extension.webRequest.onBeforeRequest.addListener(catchIpfsChromeExt, {
     types: ['main_frame'],
-    urls: ["chrome-extension://*/*"]
-  })
+    urls: ['chrome-extension://*/*'],
+  });
 
   // return api object
   return {
@@ -44,13 +42,12 @@ export default function setupEnsIpfsResolver({
     }
 
     const unUrl = unescape(url);
-    supportedProtocols.forEach(protocol => {
-      if(unUrl.includes(`${protocol}:`)) {
+    supportedProtocols.forEach((protocol) => {
+      if (unUrl.includes(`${protocol}:`)) {
         const identifier = unUrl.split(`${protocol}:`)[1];
         const ipfsGateway = getIpfsGateway();
         const newUrl = `https://${ipfsGateway}/${protocol}${identifier}`;
         extension.tabs.update(tabId, { url: newUrl });
-        return;
       }
     });
   }
@@ -63,7 +60,13 @@ export default function setupEnsIpfsResolver({
       return;
     }
     // parse ens name
-    const { hostname: name, pathname, search, hash: fragment, protocol } = new URL(url);
+    const {
+      hostname: name,
+      pathname,
+      search,
+      hash: fragment,
+      protocol,
+    } = new URL(url);
     const domainParts = name.split('.');
     const topLevelDomain = domainParts[domainParts.length - 1];
 

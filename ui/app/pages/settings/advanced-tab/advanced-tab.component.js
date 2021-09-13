@@ -5,7 +5,10 @@ import { exportAsFile } from '../../../helpers/utils/util';
 import ToggleButton from '../../../components/ui/toggle-button';
 import TextField from '../../../components/ui/text-field';
 import Button from '../../../components/ui/button';
-import { MOBILE_SYNC_ROUTE, IPFS_IPNS_URL_RESOLVING } from '../../../helpers/constants/routes';
+import {
+  MOBILE_SYNC_ROUTE,
+  IPFS_IPNS_URL_RESOLVING,
+} from '../../../helpers/constants/routes';
 
 export default class AdvancedTab extends PureComponent {
   static contextTypes = {
@@ -475,8 +478,8 @@ export default class AdvancedTab extends PureComponent {
       setIpfsIpnsHandlerShouldUpdate,
     } = this.props;
 
-    let enabled = ipfsIpnsEnabled;
-    
+    const enabled = ipfsIpnsEnabled;
+
     return (
       <div
         className="settings-page__content-row"
@@ -485,7 +488,9 @@ export default class AdvancedTab extends PureComponent {
         <div className="settings-page__content-item">
           <span>Resolve IPFS urls (experimental)</span>
           <div className="settings-page__content-description">
-            Turn on to have IPFS (ipfs://) and IPNS (ipns://) URLs  being resolved by Metamask. This feature is currently experimental; use at your own risk.
+            Turn on to have IPFS (ipfs://) and IPNS (ipns://) URLs being
+            resolved by Metamask. This feature is currently experimental; use at
+            your own risk.
           </div>
         </div>
         <div

@@ -734,7 +734,9 @@ export default class MetamaskController extends EventEmitter {
       setUsePhishDetect: this.setUsePhishDetect.bind(this),
       setIpfsGateway: this.setIpfsGateway.bind(this),
       setIpfsIpnsUrlResolving: this.setIpfsIpnsUrlResolving.bind(this),
-      setIpfsIpnsHandlerShouldUpdate: this.setIpfsIpnsHandlerShouldUpdate.bind(this),
+      setIpfsIpnsHandlerShouldUpdate: this.setIpfsIpnsHandlerShouldUpdate.bind(
+        this,
+      ),
       setParticipateInMetaMetrics: this.setParticipateInMetaMetrics.bind(this),
       setMetaMetricsSendCount: this.setMetaMetricsSendCount.bind(this),
       setFirstTimeFlowType: this.setFirstTimeFlowType.bind(this),
@@ -2922,7 +2924,6 @@ export default class MetamaskController extends EventEmitter {
       return;
     } catch (err) {
       cb(err);
-      return;
     }
   }
 
@@ -2933,7 +2934,6 @@ export default class MetamaskController extends EventEmitter {
       return;
     } catch (err) {
       cb(err);
-      return;
     }
   }
 

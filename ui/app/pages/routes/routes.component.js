@@ -171,7 +171,10 @@ export default class Routes extends Component {
           path={`${CONNECT_ROUTE}/:id`}
           component={PermissionsConnect}
         />
-        <Authenticated path={IPFS_IPNS_URL_RESOLVING} component={IpfsIpnsUrlHandling} />
+        <Authenticated
+          path={IPFS_IPNS_URL_RESOLVING}
+          component={IpfsIpnsUrlHandling}
+        />
         <Authenticated path={`${ASSET_ROUTE}/:asset`} component={Asset} />
         <Authenticated path={DEFAULT_ROUTE} component={Home} />
       </Switch>

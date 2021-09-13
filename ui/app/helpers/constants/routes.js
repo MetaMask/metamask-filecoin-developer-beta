@@ -137,7 +137,7 @@ const PATH_NAME_MAP = {
   [LOADING_QUOTES_ROUTE]: 'Swaps Loading Quotes Page',
   [AWAITING_SWAP_ROUTE]: 'Swaps Awaiting Swaps Page',
   [SWAPS_ERROR_ROUTE]: 'Swaps Error Page',
-  [IPFS_IPNS_URL_RESOLVING]: 'Ipfs and Ipns URL Resolving Info Page'
+  [IPFS_IPNS_URL_RESOLVING]: 'Ipfs and Ipns URL Resolving Info Page',
 };
 
 export {

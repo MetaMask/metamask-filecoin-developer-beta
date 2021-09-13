@@ -2234,15 +2234,15 @@ export function setIpfsIpnsHandlerShouldUpdate(val) {
     log.debug(`background.setIpfsIpnsHandlerShouldUpdate`);
     return new Promise((resolve, reject) => {
       background.setIpfsIpnsHandlerShouldUpdate(val, (err) => {
-        if(err) {
+        if (err) {
           dispatch(displayWarning(err.message));
           reject(err);
           return;
         }
         resolve(val);
-      })
-    })
-  }
+      });
+    });
+  };
 }
 
 export function setIpfsIpnsUrlResolving(val) {
@@ -2252,15 +2252,15 @@ export function setIpfsIpnsUrlResolving(val) {
     return new Promise((resolve, reject) => {
       background.setIpfsIpnsUrlResolving(val, (err) => {
         dispatch(hideLoadingIndication());
-        if(err) {
+        if (err) {
           dispatch(displayWarning(err.message));
           reject(err);
           return;
         }
         resolve(val);
       });
-    })
-  }
+    });
+  };
 }
 
 export function updateCurrentLocale(key) {

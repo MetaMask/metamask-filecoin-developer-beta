@@ -12,7 +12,7 @@ import {
   setUseNonceField,
   setIpfsGateway,
   setIpfsIpnsUrlResolving,
-  setIpfsIpnsHandlerShouldUpdate
+  setIpfsIpnsHandlerShouldUpdate,
 } from '../../../store/actions';
 import { getPreferences } from '../../../selectors';
 import AdvancedTab from './advanced-tab.component';
@@ -73,10 +73,10 @@ export const mapDispatchToProps = (dispatch) => {
       return dispatch(setIpfsGateway(value));
     },
     setIpfsIpnsUrlResolving: (value) => {
-        dispatch(setIpfsIpnsUrlResolving(value))
+      dispatch(setIpfsIpnsUrlResolving(value));
     },
     setIpfsIpnsHandlerShouldUpdate: (value) => {
-      dispatch(setIpfsIpnsHandlerShouldUpdate(value))
+      dispatch(setIpfsIpnsHandlerShouldUpdate(value));
     },
   };
 };

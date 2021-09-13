@@ -949,14 +949,14 @@
   "ipfsGatewayDescription": {
     "message": "Enter the URL of the IPFS CID gateway to use for ENS content resolution."
   },
-  "ipfsIpnsResolvingTitle": {
-    "message": "IPFS and IPNS URL resolving"
-  },
   "ipfsIpnsDescription": {
     "message": "Now metamask will resolve # and # urls directly."
   },
   "ipfsIpnsExample": {
     "message": "If you type # it will be resolved as "
+  },
+  "ipfsIpnsResolvingTitle": {
+    "message": "IPFS and IPNS URL resolving"
   },
   "jsonFile": {
     "message": "JSON File",
