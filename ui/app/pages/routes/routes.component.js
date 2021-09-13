@@ -32,6 +32,7 @@ import AppHeader from '../../components/app/app-header';
 import UnlockPage from '../unlock-page';
 import Alerts from '../../components/app/alerts';
 import Asset from '../asset';
+import IpfsIpnsUrlHandling from '../ipfs-enable';
 
 import {
   ADD_TOKEN_ROUTE,
@@ -54,6 +55,7 @@ import {
   UNLOCK_ROUTE,
   BUILD_QUOTE_ROUTE,
   CONFIRMATION_V_NEXT_ROUTE,
+  IPFS_IPNS_URL_RESOLVING,
 } from '../../helpers/constants/routes';
 
 import {
@@ -169,6 +171,7 @@ export default class Routes extends Component {
           path={`${CONNECT_ROUTE}/:id`}
           component={PermissionsConnect}
         />
+        <Authenticated path={IPFS_IPNS_URL_RESOLVING} component={IpfsIpnsUrlHandling} />
         <Authenticated path={`${ASSET_ROUTE}/:asset`} component={Asset} />
         <Authenticated path={DEFAULT_ROUTE} component={Home} />
       </Switch>

@@ -70,6 +70,7 @@ import { segment, segmentLegacy } from './lib/segment';
 import createMetaRPCHandler from './lib/createMetaRPCHandler';
 import { WORKER_BLOB_URL } from './lib/worker-blob';
 import { FILSNAP_NAME, setupFilsnap } from './lib/filsnap';
+import IpfsIpnsController from './controllers/ipfs';
 
 export const METAMASK_CONTROLLER_EVENTS = {
   // Fired after state changes that impact the extension badge (unapproved msg count)
@@ -459,6 +460,8 @@ export default class MetamaskController extends EventEmitter {
       ),
     });
 
+    this.ipfsIpnsController = new IpfsIpnsController();
+
     // ensure accountTracker updates balances after network change
     this.networkController.on(NETWORK_EVENTS.NETWORK_DID_CHANGE, () => {
       this.accountTracker._updateAccounts();
@@ -495,6 +498,7 @@ export default class MetamaskController extends EventEmitter {
       PluginController: this.pluginController.store,
       ThreeBoxController: this.threeBoxController.store,
       AssetsController: this.assetsController.store,
+      IpfsIpnsController: this.ipfsIpnsController.store,
     });
 
     this.memStore = new ComposableObservableStore(null, {
@@ -525,6 +529,7 @@ export default class MetamaskController extends EventEmitter {
       EnsController: this.ensController.store,
       ApprovalController: this.approvalController,
       AssetsController: this.assetsController.store,
+      IpfsIpnsController: this.ipfsIpnsController.store,
     });
     this.memStore.subscribe(this.sendUpdate.bind(this));
 
@@ -717,6 +722,7 @@ export default class MetamaskController extends EventEmitter {
       swapsController,
       threeBoxController,
       txController,
+      ipfsIpnsController,
     } = this;
 
     return {
@@ -727,6 +733,8 @@ export default class MetamaskController extends EventEmitter {
       setUseNonceField: this.setUseNonceField.bind(this),
       setUsePhishDetect: this.setUsePhishDetect.bind(this),
       setIpfsGateway: this.setIpfsGateway.bind(this),
+      setIpfsIpnsUrlResolving: this.setIpfsIpnsUrlResolving.bind(this),
+      setIpfsIpnsHandlerShouldUpdate: this.setIpfsIpnsHandlerShouldUpdate.bind(this),
       setParticipateInMetaMetrics: this.setParticipateInMetaMetrics.bind(this),
       setMetaMetricsSendCount: this.setMetaMetricsSendCount.bind(this),
       setFirstTimeFlowType: this.setFirstTimeFlowType.bind(this),
@@ -2903,6 +2911,28 @@ export default class MetamaskController extends EventEmitter {
     } catch (err) {
       cb(err);
       // eslint-disable-next-line no-useless-return
+      return;
+    }
+  }
+
+  setIpfsIpnsUrlResolving(bool, cb) {
+    try {
+      this.ipfsIpnsController.setIpfsIpnsUrlResolving(bool);
+      cb(null);
+      return;
+    } catch (err) {
+      cb(err);
+      return;
+    }
+  }
+
+  setIpfsIpnsHandlerShouldUpdate(bool, cb) {
+    try {
+      this.ipfsIpnsController.setIpfsIpnsHandlerShouldUpdate(bool);
+      cb(null);
+      return;
+    } catch (err) {
+      cb(err);
       return;
     }
   }

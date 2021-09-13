@@ -11,6 +11,8 @@ import {
   turnThreeBoxSyncingOnAndInitialize,
   setUseNonceField,
   setIpfsGateway,
+  setIpfsIpnsUrlResolving,
+  setIpfsIpnsHandlerShouldUpdate
 } from '../../../store/actions';
 import { getPreferences } from '../../../selectors';
 import AdvancedTab from './advanced-tab.component';
@@ -26,6 +28,7 @@ export const mapStateToProps = (state) => {
     threeBoxDisabled,
     useNonceField,
     ipfsGateway,
+    ipfsIpnsEnabled,
   } = metamask;
   const { showFiatInTestnets, autoLockTimeLimit } = getPreferences(state);
 
@@ -39,6 +42,7 @@ export const mapStateToProps = (state) => {
     threeBoxDisabled,
     useNonceField,
     ipfsGateway,
+    ipfsIpnsEnabled,
   };
 };
 
@@ -67,6 +71,12 @@ export const mapDispatchToProps = (dispatch) => {
     },
     setIpfsGateway: (value) => {
       return dispatch(setIpfsGateway(value));
+    },
+    setIpfsIpnsUrlResolving: (value) => {
+        dispatch(setIpfsIpnsUrlResolving(value))
+    },
+    setIpfsIpnsHandlerShouldUpdate: (value) => {
+      dispatch(setIpfsIpnsHandlerShouldUpdate(value))
     },
   };
 };

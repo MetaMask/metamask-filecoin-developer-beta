@@ -5,32 +5,55 @@ import resolveEnsToIpfsContentId from './resolver';
 const fetchWithTimeout = getFetchWithTimeout(30000);
 
 const supportedTopLevelDomains = ['eth'];
-const supportedProtocols = ['ipfs:', 'ipns:']
+const supportedProtocols = ['ipfs', 'ipns']
 
 export default function setupEnsIpfsResolver({
   provider,
   getCurrentChainId,
   getIpfsGateway,
-}) {
   // install listener
+}) {
   const urlPatterns = supportedTopLevelDomains.map(
     (tld) => `*://*.${tld}/*`
-  ).concat(supportedProtocols.map(
-    (p) => `${p}//*`)
   );
 
   extension.webRequest.onErrorOccurred.addListener(webRequestDidFail, {
-    urls: urlPatterns,
     types: ['main_frame'],
+    urls: urlPatterns,
   });
+
+  extension.webRequest.onBeforeRequest.addListener(catchIpfsChromeExt, {
+    types: ['main_frame'],
+    urls: ["chrome-extension://*/*"]
+  })
 
   // return api object
   return {
     // uninstall listener
     remove() {
       extension.webRequest.onErrorOccurred.removeListener(webRequestDidFail);
+      extension.webRequest.onBeforeRequest.removeListener(catchIpfsChromeExt);
     },
   };
+
+  async function catchIpfsChromeExt(details) {
+    const { tabId, url } = details;
+    // ignore requests that are not associated with tabs
+    if (tabId === -1) {
+      return;
+    }
+
+    const unUrl = unescape(url);
+    supportedProtocols.forEach(protocol => {
+      if(unUrl.includes(`${protocol}:`)) {
+        const identifier = unUrl.split(`${protocol}:`)[1];
+        const ipfsGateway = getIpfsGateway();
+        const newUrl = `https://${ipfsGateway}/${protocol}${identifier}`;
+        extension.tabs.update(tabId, { url: newUrl });
+        return;
+      }
+    });
+  }
 
   async function webRequestDidFail(details) {
     const { tabId, url } = details;
@@ -44,21 +67,13 @@ export default function setupEnsIpfsResolver({
     const domainParts = name.split('.');
     const topLevelDomain = domainParts[domainParts.length - 1];
 
-    if(supportedProtocols.includes(protocol)) {
-      console.warn(`Resolving ${protocol} not yet supported`);
-    } else if(supportedTopLevelDomains.includes(topLevelDomain)) {
-      attemptResolve({ tabId, name, pathname, search, fragment });
-    } else {
+    // if unsupported TLD, abort
+    if (!supportedTopLevelDomains.includes(topLevelDomain)) {
       return;
     }
 
-    // // if unsupported TLD, abort
-    // if (!supportedTopLevelDomains.includes(topLevelDomain)) {
-    //   return;
-    // }
-
-    // // otherwise attempt resolve
-    // attemptResolve({ tabId, name, pathname, search, fragment });
+    // otherwise attempt resolve
+    attemptResolve({ tabId, name, pathname, search, fragment });
   }
 
   async function attemptResolve({ tabId, name, pathname, search, fragment }) {

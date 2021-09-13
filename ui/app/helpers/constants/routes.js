@@ -66,6 +66,8 @@ const DECRYPT_MESSAGE_REQUEST_PATH = '/decrypt-message-request';
 const ENCRYPTION_PUBLIC_KEY_REQUEST_PATH = '/encryption-public-key-request';
 const CONFIRMATION_V_NEXT_ROUTE = '/confirmation';
 
+const IPFS_IPNS_URL_RESOLVING = '/ipfs-ipns-resolve';
+
 // Used to pull a convenient name for analytics tracking events. The key must
 // be react-router ready path, and can include params such as :id for popup windows
 const PATH_NAME_MAP = {
@@ -135,6 +137,7 @@ const PATH_NAME_MAP = {
   [LOADING_QUOTES_ROUTE]: 'Swaps Loading Quotes Page',
   [AWAITING_SWAP_ROUTE]: 'Swaps Awaiting Swaps Page',
   [SWAPS_ERROR_ROUTE]: 'Swaps Error Page',
+  [IPFS_IPNS_URL_RESOLVING]: 'Ipfs and Ipns URL Resolving Info Page'
 };
 
 export {
@@ -201,4 +204,5 @@ export {
   AWAITING_SWAP_ROUTE,
   SWAPS_ERROR_ROUTE,
   SWAPS_MAINTENANCE_ROUTE,
+  IPFS_IPNS_URL_RESOLVING,
 };

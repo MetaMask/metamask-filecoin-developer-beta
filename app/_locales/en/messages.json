@@ -685,6 +685,9 @@
   "etherscanView": {
     "message": "View account on Etherscan"
   },
+  "example": {
+    "message": "Example"
+  },
   "expandView": {
     "message": "Expand view"
   },
@@ -945,6 +948,15 @@
   },
   "ipfsGatewayDescription": {
     "message": "Enter the URL of the IPFS CID gateway to use for ENS content resolution."
+  },
+  "ipfsIpnsResolvingTitle": {
+    "message": "IPFS and IPNS URL resolving"
+  },
+  "ipfsIpnsDescription": {
+    "message": "Now metamask will resolve # and # urls directly."
+  },
+  "ipfsIpnsExample": {
+    "message": "If you type # it will be resolved as "
   },
   "jsonFile": {
     "message": "JSON File",
