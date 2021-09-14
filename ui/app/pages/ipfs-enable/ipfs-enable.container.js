@@ -1,4 +1,3 @@
-import console from 'console';
 import { connect } from 'react-redux';
 import { setIpfsIpnsHandlerShouldUpdate } from '../../store/actions';
 import IpfsEnable from './ipfs-enable.component';
@@ -10,8 +9,6 @@ const mapStateToProps = (state) => {
     ipfsIpnsEnabled,
     ipfsIpnsHandlerShouldUpdate,
   } = metamask;
-
-  console.log(state);
 
   return {
     ipfsGateway,

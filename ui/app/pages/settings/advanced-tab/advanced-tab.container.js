@@ -11,8 +11,8 @@ import {
   turnThreeBoxSyncingOnAndInitialize,
   setUseNonceField,
   setIpfsGateway,
-  setIpfsIpnsUrlResolving,
   setIpfsIpnsHandlerShouldUpdate,
+  setIpfsIpnsUrlResolving,
 } from '../../../store/actions';
 import { getPreferences } from '../../../selectors';
 import AdvancedTab from './advanced-tab.component';

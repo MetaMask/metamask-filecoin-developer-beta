@@ -36,8 +36,6 @@ export default class AdvancedTab extends PureComponent {
     threeBoxDisabled: PropTypes.bool.isRequired,
     setIpfsGateway: PropTypes.func.isRequired,
     ipfsGateway: PropTypes.string.isRequired,
-    ipfsUrlGateway: PropTypes.string.isRequired,
-    setIpfsIpnsUrlGateway: PropTypes.func,
     ipfsIpnsEnabled: PropTypes.bool,
     setIpfsIpnsUrlResolving: PropTypes.func,
     setIpfsIpnsHandlerShouldUpdate: PropTypes.func,

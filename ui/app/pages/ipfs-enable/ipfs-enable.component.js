@@ -7,17 +7,18 @@ export default class IpfsEnable extends PureComponent {
     t: PropTypes.func,
   };
 
-  static propType = {
-    ipfsGateway: PropTypes.string.isRequired,
-    ipfsIpnsEnabled: PropTypes.bool.isRequired,
-    ipfsIpnsHandlerShouldUpdate: PropTypes.bool.isRequired,
-    setIpfsIpnsHandlerShouldUpdate: PropTypes.func,
-  };
+  static get propTypes() {
+    return {
+      ipfsGateway: PropTypes.string.isRequired,
+      ipfsIpnsEnabled: PropTypes.bool.isRequired,
+      ipfsIpnsHandlerShouldUpdate: PropTypes.bool.isRequired,
+      setIpfsIpnsHandlerShouldUpdate: PropTypes.func,
+    };
+  }
 
   state = {
     ipfsGateway: this.props.ipfsGateway,
     ipfsIpnsIsEnabled: this.props.ipfsIpnsEnabled,
-    ipfsIpnsHandlerShouldUpdate: this.props.ipfsIpnsHandlerShouldUpdate,
   };
 
   componentDidMount() {

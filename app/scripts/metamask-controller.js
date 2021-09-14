@@ -722,7 +722,6 @@ export default class MetamaskController extends EventEmitter {
       swapsController,
       threeBoxController,
       txController,
-      ipfsIpnsController,
     } = this;
 
     return {
@@ -2917,6 +2916,12 @@ export default class MetamaskController extends EventEmitter {
     }
   }
 
+  /**
+   * Sets IPFS and IPNS URL resolving
+   * @param {*} bool
+   * @param {*} cb
+   * @returns
+   */
   setIpfsIpnsUrlResolving(bool, cb) {
     try {
       this.ipfsIpnsController.setIpfsIpnsUrlResolving(bool);
@@ -2924,9 +2929,17 @@ export default class MetamaskController extends EventEmitter {
       return;
     } catch (err) {
       cb(err);
+      // eslint-disable-next-line no-useless-return
+      return;
     }
   }
 
+  /**
+   * Sets if protocol handlers for ipfs and ipns should be updated
+   * @param {*} bool
+   * @param {*} cb
+   * @returns
+   */
   setIpfsIpnsHandlerShouldUpdate(bool, cb) {
     try {
       this.ipfsIpnsController.setIpfsIpnsHandlerShouldUpdate(bool);
@@ -2934,6 +2947,8 @@ export default class MetamaskController extends EventEmitter {
       return;
     } catch (err) {
       cb(err);
+      // eslint-disable-next-line no-useless-return
+      return;
     }
   }
 
