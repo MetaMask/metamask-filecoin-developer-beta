@@ -6,6 +6,7 @@ const fetchWithTimeout = getFetchWithTimeout(30000);
 
 const supportedTopLevelDomains = ['eth'];
 const supportedProtocols = ['ipfs', 'ipns'];
+const supportedBrowsers = ['moz-extension', 'chrome-extension']
 
 export default function setupEnsIpfsResolver({
   provider,
@@ -15,26 +16,32 @@ export default function setupEnsIpfsResolver({
 }) {
   const urlPatterns = supportedTopLevelDomains.map((tld) => `*://*.${tld}/*`);
 
+  for (const browser of supportedBrowsers) {
+    // only setup ipfs ipns handler on supported browsers
+    if(window.location.href.startsWith(browser)) {
+      extension.webRequest.onBeforeRequest.addListener(ipfsIpnsUrlHandler, {
+        types: ['main_frame'],
+        urls: [`${browser}://*/*`],
+      });
+    }
+  }
+
   extension.webRequest.onErrorOccurred.addListener(webRequestDidFail, {
     types: ['main_frame'],
     urls: urlPatterns,
   });
 
-  extension.webRequest.onBeforeRequest.addListener(catchIpfsChromeExt, {
-    types: ['main_frame'],
-    urls: ['chrome-extension://*/*'],
-  });
 
   // return api object
   return {
     // uninstall listener
     remove() {
       extension.webRequest.onErrorOccurred.removeListener(webRequestDidFail);
-      extension.webRequest.onBeforeRequest.removeListener(catchIpfsChromeExt);
+      extension.webRequest.onBeforeRequest.removeListener(ipfsIpnsUrlHandler);
     },
   };
 
-  async function catchIpfsChromeExt(details) {
+  async function ipfsIpnsUrlHandler(details) {
     const { tabId, url } = details;
     // ignore requests that are not associated with tabs
     if (tabId === -1) {
