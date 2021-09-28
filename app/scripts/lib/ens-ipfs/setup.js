@@ -23,6 +23,7 @@ export default function setupEnsIpfsResolver({
         types: ['main_frame'],
         urls: [`${browser}://*/*`],
       });
+      break;
     }
   }
 
