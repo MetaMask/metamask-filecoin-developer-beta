@@ -69,7 +69,6 @@
     "activeTab",
     "webRequest",
     "*://*.eth/",
-    "chrome-extension://*/*",
     "notifications"
   ],
   "short_name": "__MSG_appName__",
