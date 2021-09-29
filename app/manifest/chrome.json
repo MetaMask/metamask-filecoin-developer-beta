@@ -3,8 +3,5 @@
     "matches": ["https://metamask.io/*"],
     "ids": ["*"]
   },
-  "minimum_chrome_version": "63",
-  "permissions": [
-    "chrome-extension://*/*"
-  ]
+  "minimum_chrome_version": "63"
 }
