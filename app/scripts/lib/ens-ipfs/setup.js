@@ -6,7 +6,7 @@ const fetchWithTimeout = getFetchWithTimeout(30000);
 
 const supportedTopLevelDomains = ['eth'];
 const supportedProtocols = ['ipfs', 'ipns'];
-const supportedBrowsers = ['moz-extension', 'chrome-extension']
+const supportedBrowsers = ['chrome-extension']
 
 export default function setupEnsIpfsResolver({
   provider,
