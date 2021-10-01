@@ -23,7 +23,7 @@ function createManifestTasks({ browserPlatforms }) {
             `${platform}.json`,
           ),
         );
-        const result = mergeWith(cloneDeep(baseManifest), platformModifications);
+        const result = merge(cloneDeep(baseManifest), platformModifications);
         const dir = path.join('.', 'dist', platform);
         await fs.mkdir(dir, { recursive: true });
         await writeJson(result, path.join(dir, 'manifest.json'));
