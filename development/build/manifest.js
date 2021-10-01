@@ -1,12 +1,18 @@
 const { promises: fs } = require('fs');
 const path = require('path');
-const { merge, cloneDeep } = require('lodash');
+const { cloneDeep, mergeWith } = require('lodash');
 
 const baseManifest = require('../../app/manifest/_base.json');
 
 const { createTask, composeSeries } = require('./task');
 
 module.exports = createManifestTasks;
+
+function customArrayMerge(objValue, srcValue) {
+  if (Array.isArray(objValue)) {
+    return [...new Set([...objValue ,...srcValue])]
+  }
+}
 
 function createManifestTasks({ browserPlatforms }) {
   // merge base manifest with per-platform manifests
@@ -23,7 +29,9 @@ function createManifestTasks({ browserPlatforms }) {
             `${platform}.json`,
           ),
         );
-        const result = merge(cloneDeep(baseManifest), platformModifications);
+        const result = mergeWith(
+          cloneDeep(baseManifest), platformModifications, customArrayMerge
+        );
         const dir = path.join('.', 'dist', platform);
         await fs.mkdir(dir, { recursive: true });
         await writeJson(result, path.join(dir, 'manifest.json'));
