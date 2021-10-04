@@ -9,6 +9,8 @@ import {
   MOBILE_SYNC_ROUTE,
   IPFS_IPNS_URL_RESOLVING,
 } from '../../../helpers/constants/routes';
+import { getPlatform } from '../../../../../app/scripts/lib/util';
+import { PLATFORM_CHROME } from '../../../../../shared/constants/app';
 
 export default class AdvancedTab extends PureComponent {
   static contextTypes = {
@@ -478,39 +480,43 @@ export default class AdvancedTab extends PureComponent {
 
     const enabled = ipfsIpnsEnabled;
 
-    return (
-      <div
-        className="settings-page__content-row"
-        data-testid="advanced-setting-ipfsurl"
-      >
-        <div className="settings-page__content-item">
-          <span>Resolve IPFS urls (experimental)</span>
-          <div className="settings-page__content-description">
-            Turn on to have IPFS (ipfs://) and IPNS (ipns://) URLs being
-            resolved by Metamask. This feature is currently experimental; use at
-            your own risk.
-          </div>
-        </div>
+    if(getPlatform() == PLATFORM_CHROME) {
+      return (
         <div
-          className={classnames('settings-page__content-item', {
-            'settings-page__content-item--disabled': enabled,
-          })}
+          className="settings-page__content-row"
+          data-testid="advanced-setting-ipfsurl"
         >
-          <div className="settings-page__content-item-col">
-            <ToggleButton
-              value={enabled}
-              onToggle={() => {
-                setIpfsIpnsUrlResolving(!enabled);
-                setIpfsIpnsHandlerShouldUpdate(true);
-                global.platform.openExtensionInBrowser(IPFS_IPNS_URL_RESOLVING);
-              }}
-              offLabel={t('off')}
-              onLabel={t('on')}
-            />
+          <div className="settings-page__content-item">
+            <span>Resolve IPFS urls (experimental)</span>
+            <div className="settings-page__content-description">
+              Turn on to have IPFS (ipfs://) and IPNS (ipns://) URLs being
+              resolved by Metamask. This feature is currently experimental; use at
+              your own risk.
+            </div>
+          </div>
+          <div
+            className={classnames('settings-page__content-item', {
+              'settings-page__content-item--disabled': enabled,
+            })}
+          >
+            <div className="settings-page__content-item-col">
+              <ToggleButton
+                value={enabled}
+                onToggle={() => {
+                  setIpfsIpnsUrlResolving(!enabled);
+                  setIpfsIpnsHandlerShouldUpdate(true);
+                  global.platform.openExtensionInBrowser(IPFS_IPNS_URL_RESOLVING);
+                }}
+                offLabel={t('off')}
+                onLabel={t('on')}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return;
+    }
   }
 
   render() {
