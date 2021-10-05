@@ -15,9 +15,8 @@ export default function setupEnsIpfsResolver({
   // install listener
 }) {
   const urlPatterns = supportedTopLevelDomains.map((tld) => `*://*.${tld}/*`);
-
+  // only setup ipfs ipns handler on supported browsers
   for (const browser of supportedBrowsers) {
-    // only setup ipfs ipns handler on supported browsers
     if(window.location.href.startsWith(browser)) {
       extension.webRequest.onBeforeRequest.addListener(ipfsIpnsUrlHandler, {
         types: ['main_frame'],
