@@ -30,7 +30,9 @@ function createManifestTasks({ browserPlatforms }) {
           ),
         );
         const result = mergeWith(
-          cloneDeep(baseManifest), platformModifications, customArrayMerge
+          cloneDeep(baseManifest),
+          platformModifications,
+          customArrayMerge
         );
         const dir = path.join('.', 'dist', platform);
         await fs.mkdir(dir, { recursive: true });
