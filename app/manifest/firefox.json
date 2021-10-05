@@ -7,13 +7,13 @@
   },
   "protocol_handlers": [
     {
-      "protocol": "ipfs",
-      "name": "IPFS Companion: IPFS Protocol Handler",
+      "protocol": "dweb",
+      "name": "IPFS Companion: DWEB Protocol Handler",
       "uriTemplate": "https://dweb.link/ipfs/?uri=%s"
     },
     {
-      "protocol": "dweb",
-      "name": "IPFS Companion: DWEB Protocol Handler",
+      "protocol": "ipfs",
+      "name": "IPFS Companion: IPFS Protocol Handler",
       "uriTemplate": "https://dweb.link/ipfs/?uri=%s"
     },
     {
