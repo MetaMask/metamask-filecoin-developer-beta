@@ -2229,6 +2229,40 @@ export function setIpfsGateway(val) {
   };
 }
 
+export function setIpfsIpnsHandlerShouldUpdate(val) {
+  return (dispatch) => {
+    log.debug(`background.setIpfsIpnsHandlerShouldUpdate`);
+    return new Promise((resolve, reject) => {
+      background.setIpfsIpnsHandlerShouldUpdate(val, (err) => {
+        if (err) {
+          dispatch(displayWarning(err.message));
+          reject(err);
+          return;
+        }
+        resolve(val);
+      });
+    });
+  };
+}
+
+export function setIpfsIpnsUrlResolving(val) {
+  return (dispatch) => {
+    dispatch(showLoadingIndication());
+    log.debug(`background.setIpfsIpnsUrlResolving`);
+    return new Promise((resolve, reject) => {
+      background.setIpfsIpnsUrlResolving(val, (err) => {
+        dispatch(hideLoadingIndication());
+        if (err) {
+          dispatch(displayWarning(err.message));
+          reject(err);
+          return;
+        }
+        resolve(val);
+      });
+    });
+  };
+}
+
 export function updateCurrentLocale(key) {
   return async (dispatch) => {
     dispatch(showLoadingIndication());
